@@ -26,3 +26,5 @@ message.place(x=200, y=200)
 lbl = tk.Label(window, text="No.", width=20, height=2)
 lbl.place(x=400, y=200)
 
+
+window.mainloop()
