@@ -20,3 +20,9 @@ window.configure(background="white")
 window.grid_rowconfigure(0, weight=1)
 window.grid_columnconfigure(0, weight=1)
 message = tk.Label(window, text="Welcome to Face Recogniser", font=("Helvetica", 2))
+
+message.place(x=200, y=200)
+
+lbl = tk.Label(window, text="No.", width=20, height=2)
+lbl.place(x=400, y=200)
+
