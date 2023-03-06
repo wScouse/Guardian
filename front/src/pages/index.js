@@ -11,7 +11,7 @@ const Home = () => {
         <h1 className="mb-0 text-white px-3 py-2" style={{fontSize: '4rem'}}>Guardian</h1>
       </div>
       <div className="mt-5 pt-5">
-        <button type="button" className="btn btn-primary mx-3">Report</button>
+        <Link to="/report" className="btn btn-primary mx-3">Report</Link>
         <Link to="/login" className="btn btn-secondary mx-3">Login</Link>
       </div>
     </div>
