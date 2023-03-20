@@ -1,0 +1,32 @@
+.navbar-main {
+    background-color: #343a40;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  
+  .navbar-main .nav-link {
+    font-size: 18px;
+    margin-left: 10px;
+  }
+  
+  .navbar-main .nav-link.active-link {
+    color: #ffc107 !important;
+    border-bottom: 2px solid #ffc107;
+  }
+  
+  .navbar-main .nav-link:hover {
+    color: #ffc107;
+  }
+  
+  .logout-btn {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    margin-left: 10px;
+    font-size: 18px;
+  }
+  
+  .logout-btn:hover {
+    background-color: #c82333;
+    border-color: #bd2130;
+  }
+  

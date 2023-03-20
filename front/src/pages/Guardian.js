@@ -11,14 +11,22 @@ import {
   Table,
 } from "react-bootstrap";
 
+import { BrowserRouter as useLocation, Link } from 'react-router-dom';
+
+import "../components/Navbar.css"
+
 function Guardian() {
+  
   return (
+    
     <div className="bg-dark">
-      <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#">My App</Navbar.Brand>
+      <Navbar expand="lg" variant="dark" className="navbar-main">
+        <Container fluid>
+        <Navbar.Brand href="#">Guardian</Navbar.Brand>
+        <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav className="mr-auto">
-          <Nav.Link href="#">Home</Nav.Link>
-          <Nav.Link href="#">Detections</Nav.Link>
+          <Nav.Link as={Link} to="/guardian" className="active-link">Home</Nav.Link>
+          <Nav.Link as={Link} to="/detections">Detections</Nav.Link>
           <Nav.Link href="#">Config</Nav.Link>
           <Nav.Link href="#">Reports</Nav.Link>
           <Nav.Link href="#">Requests</Nav.Link>
@@ -27,6 +35,7 @@ function Guardian() {
         <Button variant="danger" className="ml-auto">
           Logout
         </Button>
+        </Container>
       </Navbar>
       <Container className="mt-4">
         <Row>
