@@ -15,7 +15,7 @@ import { BrowserRouter as useLocation, Link } from 'react-router-dom';
 
 import "../components/Navbar.css"
 
-function Reports() {
+function Guide() {
   
   return (
     
@@ -28,9 +28,9 @@ function Reports() {
           <Nav.Link as={Link} to="/guardian">Home</Nav.Link>
           <Nav.Link as={Link} to="/detections">Detections</Nav.Link>
           <Nav.Link as={Link} to="/configure">Configure</Nav.Link>
-          <Nav.Link as={Link} to="/reports" className="active-link">Reports</Nav.Link>
+          <Nav.Link as={Link} to="/reports">Reports</Nav.Link>
           <Nav.Link as={Link} to="/requests">Requests</Nav.Link>
-          <Nav.Link as={Link} to="/guide">Guide</Nav.Link>
+          <Nav.Link as={Link} to="/guide" className="active-link">Guide</Nav.Link>
         </Nav>
         <Button variant="danger" className="ml-auto">
           Logout
@@ -41,33 +41,43 @@ function Reports() {
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
-              <th>Threat level</th>
-              <th>Date / Time</th>
-              <th>Name</th>
+              <th>Topic</th>
               <th>Link</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td>High</td>
-              <td>2022-03-01 12:34:56</td>
-              <td>Malware attack</td>
+              <td>Home</td>
               <td>
                 <a href="#">View</a>
               </td>
             </tr>
             <tr>
-              <td>Medium</td>
-              <td>2022-02-28 23:45:01</td>
-              <td>Phishing email</td>
+              <td>Detections</td>
               <td>
                 <a href="#">View</a>
               </td>
             </tr>
             <tr>
-              <td>Low</td>
-              <td>2022-02-27 09:12:34</td>
-              <td>Suspicious activity</td>
+              <td>Configure</td>
+              <td>
+                <a href="#">View</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Reports</td>
+              <td>
+                <a href="#">View</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Requests</td>
+              <td>
+                <a href="#">View</a>
+              </td>
+            </tr>
+            <tr>
+              <td>Other</td>
               <td>
                 <a href="#">View</a>
               </td>
@@ -79,4 +89,4 @@ function Reports() {
   );
 }
 
-export default Reports;
+export default Guide;

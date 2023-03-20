@@ -29,8 +29,8 @@ function Guardian() {
           <Nav.Link as={Link} to="/detections">Detections</Nav.Link>
           <Nav.Link as={Link} to="/configure">Configure</Nav.Link>
           <Nav.Link as={Link} to="/reports">Reports</Nav.Link>
-          <Nav.Link href="#">Requests</Nav.Link>
-          <Nav.Link href="#">Guide</Nav.Link>
+          <Nav.Link as={Link} to="/requests">Requests</Nav.Link>
+          <Nav.Link as={Link} to="/guide">Guide</Nav.Link>
         </Nav>
         <Button variant="danger" className="ml-auto">
           Logout
