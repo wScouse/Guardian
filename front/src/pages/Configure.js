@@ -27,7 +27,7 @@ function Configure() {
           <Nav.Link as={Link} to="/guardian">Home</Nav.Link>
           <Nav.Link as={Link} to="/detections">Detections</Nav.Link>
           <Nav.Link as={Link} to="/configure" className="active-link">Configure</Nav.Link>
-          <Nav.Link href="#">Reports</Nav.Link>
+          <Nav.Link as={Link} to="/reports">Reports</Nav.Link>
           <Nav.Link href="#">Requests</Nav.Link>
           <Nav.Link href="#">Guide</Nav.Link>
         </Nav>

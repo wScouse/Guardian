@@ -15,7 +15,7 @@ import { BrowserRouter as useLocation, Link } from 'react-router-dom';
 
 import "../components/Navbar.css"
 
-function Guardian() {
+function Reports() {
   
   return (
     
@@ -25,10 +25,10 @@ function Guardian() {
         <Navbar.Brand href="#">Guardian</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/guardian" className="active-link">Home</Nav.Link>
+          <Nav.Link as={Link} to="/guardian">Home</Nav.Link>
           <Nav.Link as={Link} to="/detections">Detections</Nav.Link>
           <Nav.Link as={Link} to="/configure">Configure</Nav.Link>
-          <Nav.Link as={Link} to="/reports">Reports</Nav.Link>
+          <Nav.Link as={Link} to="/reports" className="active-link">Reports</Nav.Link>
           <Nav.Link href="#">Requests</Nav.Link>
           <Nav.Link href="#">Guide</Nav.Link>
         </Nav>
@@ -37,22 +37,6 @@ function Guardian() {
         </Button>
         </Container>
       </Navbar>
-      <Container className="mt-4">
-        <Row>
-          <Col>
-            <Card className="p-3">
-              <h4>Number of Detections</h4>
-              <p>25</p>
-            </Card>
-          </Col>
-          <Col>
-            <Card className="p-3">
-              <h4>Server Status</h4>
-              <p>Online</p>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
       <Container className="mt-4">
         <Table striped bordered hover variant="dark">
           <thead>
@@ -95,4 +79,4 @@ function Guardian() {
   );
 }
 
-export default Guardian;
+export default Reports;
