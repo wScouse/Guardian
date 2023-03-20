@@ -6,6 +6,7 @@ import Login from './pages/Login';
 import Report from './pages/Report';
 import Guardian from './pages/Guardian';
 import Detections from './pages/Detections';
+import Configure from './pages/Configure';
 import Home from './pages';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
         <Route path="/report" element={<Report />} />
         <Route path="/guardian" element={<Guardian />} />
         <Route path="/detections" element={<Detections />} />
+        <Route path="/configure" element={<Configure />} />
       </Routes>
     </Router>
   );
