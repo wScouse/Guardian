@@ -1,0 +1,1 @@
+# Create DynamoDB table to store login data.
