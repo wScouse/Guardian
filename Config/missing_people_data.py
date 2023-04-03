@@ -53,6 +53,9 @@ try:
     val = (dataName, dataAge, dataGender, dataLocation, dataInfo, dataDate, kinID, "False")
     cursor.execute(sql, val)
 
+    caseID = cursor.lastrowid
+    print(caseID)
+
     # Commit transaction
     missingDB.commit()
 
@@ -63,11 +66,21 @@ except Exception as e:
     missingDB.rollback()
     print("Error: ", e)
 
-# display all records
-# table = cursor.fetchall()
+# Image Preprocessing
 
-# # Close cursor
-# cursor.close()
+# Select Image
 
-# # Close connection object
-# missingDB.close()
+
+# Create ID
+
+
+# Save Image with ID
+
+
+# Add ID to table
+
+# Close cursor
+cursor.close()
+
+# Close connection object
+missingDB.close()
