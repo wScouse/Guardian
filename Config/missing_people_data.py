@@ -3,6 +3,16 @@
 import mysql.connector
 import datetime
 
+import tkinter as tk
+from tkinter import filedialog
+
+# Tkinter settings
+root = tk.Tk()
+root.withdraw()
+
+import uuid
+import os
+
 print("Connecting to DB..")
 missingDB=mysql.connector.connect(
     host="localhost", user="Guardian",
@@ -69,18 +79,44 @@ except Exception as e:
 # Image Preprocessing
 
 # Select Image
-
+file_path = filedialog.askopenfilename(
+    initialdir="/", title="Select Image File",
+    filetypes=[("Image Files", ("*.jpg", "*.jpeg", "*.png", "*.bmp"))])
 
 # Create ID
+file_name = file_path.split("/")[-1]
+print("Selected file name:", file_name)
+file_ext = file_path.split(".")[1]
 
+# Generate random ID using UUID
+uniqueID = str(uuid.uuid4())
+print("Unique ID: ", uniqueID)
 
 # Save Image with ID
+new_file_name = uniqueID + "." + file_ext
+print("File: ", new_file_name)
 
+# Path to local database
+dbDir = 'C:/Users/willi/Documents/#DEV/Uni/Dissertation/GuardianDB/'
+
+savePath = os.path.join(dbDir, new_file_name)
+print(savePath)
+
+# Copy original image to new file with new name.
+with open(file_path, 'rb') as fsrc, open(savePath, 'wb') as  fdst:
+    fdst.write(fsrc.read())
 
 # Add ID to table
+
+sql = "UPDATE missing_people_data SET photoID = %s WHERE missingID = %s"
+cursor.execute(sql, (uniqueID, caseID,))
+
+missingDB.commit()
 
 # Close cursor
 cursor.close()
 
 # Close connection object
 missingDB.close()
+
+print("Report Submitted!")
