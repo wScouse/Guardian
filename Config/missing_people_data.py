@@ -49,8 +49,8 @@ try:
     kinID = cursor.lastrowid
 
     # Add data to database.
-    sql = "INSERT INTO missing_people_data (missingNAME, missingAGE, missingGENDER, missingLOCATION, missingINFO, missingFROM, kinID) values (%s, %s, %s, %s, %s, %s, %s)"
-    val = (dataName, dataAge, dataGender, dataLocation, dataInfo, dataDate, kinID)
+    sql = "INSERT INTO missing_people_data (missingNAME, missingAGE, missingGENDER, missingLOCATION, missingINFO, missingFROM, kinID, foundSTATUS) values (%s, %s, %s, %s, %s, %s, %s, %s)"
+    val = (dataName, dataAge, dataGender, dataLocation, dataInfo, dataDate, kinID, "False")
     cursor.execute(sql, val)
 
     # Commit transaction
