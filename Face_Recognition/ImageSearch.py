@@ -242,7 +242,10 @@ else:
     # Otherwise the details are extracted.
     print("The following Case IDs have been found: %s \n" % matchingIDs)
     verifiedIDs = verifyMatch(file_path, matchingIDs)
-    detectionID = extractData(verifiedIDs)
-    captureID = saveImage(file_path, capturesDir)
-    captureDate = datetime.datetime.now()
-    saveData(detectionID, captureID, captureDate)
+    if not verifiedIDs:
+        print("No valid matches!")
+    else:
+        detectionID = extractData(verifiedIDs)
+        captureID = saveImage(file_path, capturesDir)
+        captureDate = datetime.datetime.now()
+        saveData(detectionID, captureID, captureDate)
