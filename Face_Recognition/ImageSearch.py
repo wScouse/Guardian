@@ -81,16 +81,16 @@ def verifyMatch(img1, matchingIDs):
     verifiedIDs = []
 
 
-    print("Matching IDs: %s" % matchingIDs)
+    # print("Matching IDs: %s" % matchingIDs)
 
     for x in matchingIDs:
         # Get the ID for image in DB
-        print("matching: %s" % x)
+        # print("matching: %s" % x)
 
         img = x + ".jpg"
         # Get full directory for image.
         img2 = os.path.join(missingDir, img)
-        print(img2)
+        # print(img2)
 
         # Load both images
         image1 = Image.open(img1)
@@ -125,7 +125,7 @@ def verifyMatch(img1, matchingIDs):
         else:
             print("False Match")
 
-    print("Verified Ids: %s" % verifiedIDs)
+    # print("Verified Ids: %s" % verifiedIDs)
 
     return verifiedIDs
 
@@ -168,18 +168,17 @@ def extractData(caseIDs):
             print("Reported by %s" % caseReporter)
             print("Reported on: ")
             print("\n")
-
-
-
     
     cursor.close()
     guardianDB.close()
+
+    return caseID
 
 
 def saveImage(capture, directory):
     # This function generates a unique ID for the image and then saves it using the ID.
 
-    print(capture)
+    # print(capture)
 
     # Create ID
     file_name = capture.split("/")[-1]
@@ -188,11 +187,11 @@ def saveImage(capture, directory):
 
     # Generate random ID using UUID
     uniqueID = str(uuid.uuid4())
-    print("Unique ID: ", uniqueID)
+    # print("Unique ID: ", uniqueID)
 
     # Save Image with ID
     new_file_name = uniqueID + "." + file_ext
-    print("File: ", new_file_name)
+    # print("File: ", new_file_name)
 
     savePath = os.path.join(directory, new_file_name)
     print(savePath)
@@ -204,11 +203,34 @@ def saveImage(capture, directory):
     return uniqueID
 
 
-def saveData(captureID, captureDate):
+def saveData(detectionID, captureID, captureDate):
     # This function will store information into the table.
 
+    print("Identified as: %s" % detectionID)
     print("Saving capture ID: " + captureID)
     print("Captured: %s" % captureDate)
+    location = input("Location: ")
+
+
+    # Connect to database
+    detectionDB=mysql.connector.connect(
+    host="localhost", user="Guardian",
+    password="", database="guardian_missing_people_data")
+
+    # Get a cursor object
+    cursor = detectionDB.cursor()
+
+    try:
+        cursor.execute("INSERT INTO detection_data (missingID, detectionDATE, detectionLOCATION, detectionCAPTURE) VALUES (%s, %s, %s, %s)", (detectionID, captureDate, location, captureID))
+        # Commit transaction
+        detectionDB.commit()
+
+        print("Data inserted!")
+
+    except Exception as e:
+        # Rollback the transaction if an error occurred.
+        detectionDB.rollback()
+        print("Error: ", e)
 
 img1, file_path = fileSelector()
 matchingIDs = findImage(img1)
@@ -220,7 +242,7 @@ else:
     # Otherwise the details are extracted.
     print("The following Case IDs have been found: %s \n" % matchingIDs)
     verifiedIDs = verifyMatch(file_path, matchingIDs)
-    extractData(verifiedIDs)
+    detectionID = extractData(verifiedIDs)
     captureID = saveImage(file_path, capturesDir)
     captureDate = datetime.datetime.now()
-    saveData(captureID, captureDate)
+    saveData(detectionID, captureID, captureDate)
