@@ -9,10 +9,16 @@ import matplotlib.pyplot as plt
 # from PIL import Image
 # import pandas as pd
 import mysql.connector
+import uuid
+import os
 
 # Tkinter settings
 root = tk.Tk()
 root.withdraw()
+
+# Directory to store captured images:
+capturesDir = "C:/Users/willi/Documents/#DEV/Uni/Dissertation/GuardianCaptures"
+
 
 def fileSelector():
     # File Selection
@@ -26,7 +32,7 @@ def fileSelector():
 
     img1 = cv2.imread(file_path)
 
-    return img1
+    return img1, file_path
 
 
 def findImage(img1):
@@ -114,7 +120,33 @@ def extractData(caseIDs):
     guardianDB.close()
 
 
-img1 = fileSelector()
+def saveImage(capture, directory):
+    # This function generates a unique ID for the image and then saves it using the ID.
+
+    print(capture)
+
+    # Create ID
+    file_name = capture.split("/")[-1]
+    print("Selected file name:", file_name)
+    file_ext = capture.split(".")[1]
+
+    # Generate random ID using UUID
+    uniqueID = str(uuid.uuid4())
+    print("Unique ID: ", uniqueID)
+
+    # Save Image with ID
+    new_file_name = uniqueID + "." + file_ext
+    print("File: ", new_file_name)
+
+    savePath = os.path.join(directory, new_file_name)
+    print(savePath)
+
+    # Copy original image to new file with new name.
+    with open(capture, 'rb') as fsrc, open(savePath, 'wb') as  fdst:
+        fdst.write(fsrc.read())
+
+
+img1, file_path = fileSelector()
 matchingIDs = findImage(img1)
 
 if not matchingIDs:
@@ -124,3 +156,4 @@ else:
     # Otherwise the details are extracted.
     print("The following Case IDs have been found: %s \n" % matchingIDs)
     extractData(matchingIDs)
+    saveImage(file_path, capturesDir)
