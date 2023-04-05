@@ -6,11 +6,12 @@ from tkinter import filedialog
 from deepface import DeepFace
 import cv2
 import matplotlib.pyplot as plt
-# from PIL import Image
+from PIL import Image
 # import pandas as pd
 import mysql.connector
 import uuid
 import os
+import datetime
 
 # Tkinter settings
 root = tk.Tk()
@@ -18,6 +19,7 @@ root.withdraw()
 
 # Directory to store captured images:
 capturesDir = "C:/Users/willi/Documents/#DEV/Uni/Dissertation/GuardianCaptures"
+missingDir = "C:/Users/willi/Documents/#DEV/Uni/Dissertation/GuardianDB/"
 
 
 def fileSelector():
@@ -71,7 +73,61 @@ def findImage(img1):
     
     return matchingIDs
     
-    
+
+def verifyMatch(img1, matchingIDs):
+    # This function verifies the Images with user inputs.
+
+    # List to store verified IDs
+    verifiedIDs = []
+
+
+    print("Matching IDs: %s" % matchingIDs)
+
+    for x in matchingIDs:
+        # Get the ID for image in DB
+        print("matching: %s" % x)
+
+        img = x + ".jpg"
+        # Get full directory for image.
+        img2 = os.path.join(missingDir, img)
+        print(img2)
+
+        # Load both images
+        image1 = Image.open(img1)
+        image2 = Image.open(img2)
+
+        # Create a figure and axis objects
+        fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+
+        # Display the images on the axis objects
+        ax[0].imshow(image1)
+        ax[1].imshow(image2)
+
+        # Set Titles
+        ax[0].set_title("Capture")
+        ax[1].set_title("Database")
+
+        # Remove the axis ticks and labels
+        for axis in ax:
+            axis.set_xticks([])
+            axis.set_yticks([])
+            axis.set_xlabel('')
+            axis.set_ylabel('')
+
+        # Display the figure
+        plt.show()
+
+        print("\n")
+        userVerification = input("Did the two images match? (Y/N) ")
+        if userVerification == 'Y':
+            print("Match Verified")
+            verifiedIDs.append(x)
+        else:
+            print("False Match")
+
+    print("Verified Ids: %s" % verifiedIDs)
+
+    return verifiedIDs
 
 
 def extractData(caseIDs):
@@ -145,6 +201,14 @@ def saveImage(capture, directory):
     with open(capture, 'rb') as fsrc, open(savePath, 'wb') as  fdst:
         fdst.write(fsrc.read())
 
+    return uniqueID
+
+
+def saveData(captureID, captureDate):
+    # This function will store information into the table.
+
+    print("Saving capture ID: " + captureID)
+    print("Captured: %s" % captureDate)
 
 img1, file_path = fileSelector()
 matchingIDs = findImage(img1)
@@ -155,5 +219,8 @@ if not matchingIDs:
 else:
     # Otherwise the details are extracted.
     print("The following Case IDs have been found: %s \n" % matchingIDs)
-    extractData(matchingIDs)
-    saveImage(file_path, capturesDir)
+    verifiedIDs = verifyMatch(file_path, matchingIDs)
+    extractData(verifiedIDs)
+    captureID = saveImage(file_path, capturesDir)
+    captureDate = datetime.datetime.now()
+    saveData(captureID, captureDate)
