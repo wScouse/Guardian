@@ -175,6 +175,22 @@ def extractData(caseIDs):
     return caseID
 
 
+def analyzeImage(capture):
+    # This function uses DeepFace to analyze the image
+    # and identify the emotion.
+
+    # print(capture)
+
+    print("Analyzing...")
+
+    analysedResults = DeepFace.analyze(img_path= capture, actions = 'emotion')
+    # print(analysedResults)
+    # Gets the dominant emotion.
+    emotion = analysedResults[0]['dominant_emotion']
+    print("Emotion: %s" % emotion)
+    return emotion
+
+
 def saveImage(capture, directory):
     # This function generates a unique ID for the image and then saves it using the ID.
 
@@ -246,6 +262,7 @@ else:
         print("No valid matches!")
     else:
         detectionID = extractData(verifiedIDs)
-        captureID = saveImage(file_path, capturesDir)
-        captureDate = datetime.datetime.now()
-        saveData(detectionID, captureID, captureDate)
+        emotionID = analyzeImage(file_path)
+        # captureID = saveImage(file_path, capturesDir)
+        # captureDate = datetime.datetime.now()
+        # saveData(detectionID, captureID, captureDate)
