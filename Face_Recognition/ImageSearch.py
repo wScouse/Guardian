@@ -190,6 +190,60 @@ def analyzeImage(capture):
     print("Emotion: %s" % emotion)
     return emotion
 
+def assessThreat(emotion, detectionID):
+    # This function assess the threat with the associated emotion.
+
+    # Threat Level Lists
+    highThreat = ["angry", "fear", "sad", "disgust"]
+    mediumThreat = ["surprise"]
+    lowThreat = ["happy", "neutral"]
+
+    # Assign threat level
+    if emotion in highThreat:
+        print("High Threat Level!")
+        threat = "high"
+    elif emotion in mediumThreat:
+        print("Medium Threat Level!")
+        threat = "medium"
+    elif emotion in lowThreat:
+        print("Low Threat Level!")
+        threat = "low"
+    else:
+        print("Error")
+
+    # Get estimated threat level
+    guardianDB=mysql.connector.connect(
+        host="localhost", user="Guardian",
+        password="", database="guardian_missing_people_data")
+    cursor = guardianDB.cursor()  
+
+    sql = "SELECT threatESTIMATE FROM missing_people_data WHERE missingID = %s"
+    cursor.execute(sql, (detectionID,))
+
+    caseEthreat = cursor.fetchone()
+    
+    cursor.close()
+    guardianDB.close()
+
+    # Compare threat level: Estimate vs Actual
+    print("Estimated Threat: %s" % caseEthreat)
+    print("Actual Threat: %s" % threat)
+
+    return threat
+
+def saveThreat(threat, missingID):
+    # This function will update threatACTUAL for the missing person.
+    threatDB=mysql.connector.connect(
+    host="localhost", user="Guardian",
+    password="", database="guardian_missing_people_data")
+    cursor = threatDB.cursor()  
+
+    sql = "UPDATE missing_people_data SET threatACTUAL = %s WHERE missingID = %s"
+    cursor.execute(sql, (threat, missingID,))
+    
+    threatDB.commit()
+
+    threatDB.close()
 
 def saveImage(capture, directory):
     # This function generates a unique ID for the image and then saves it using the ID.
@@ -263,6 +317,8 @@ else:
     else:
         detectionID = extractData(verifiedIDs)
         emotionID = analyzeImage(file_path)
-        # captureID = saveImage(file_path, capturesDir)
-        # captureDate = datetime.datetime.now()
-        # saveData(detectionID, captureID, captureDate)
+        threatLevel = assessThreat(emotionID, detectionID)
+        saveThreat(threatLevel, detectionID)
+        captureID = saveImage(file_path, capturesDir)
+        captureDate = datetime.datetime.now()
+        saveData(detectionID, captureID, captureDate)
