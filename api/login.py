@@ -3,16 +3,17 @@
 from flask import Flask, request, session, jsonify
 
 app = Flask(__name__)
-app.secret_key = 'secret'
 
 @app.route('/api/login', methods=['POST'])
 def login():
-    username = request.json.get('username')
+    email = request.json.get('email')
+    print(email)
     password = request.json.get('password')
+    print(password)
 
     # Validate Username and Password
-    if username == 'admin' and password == 'admin':
-        session['username'] = username
+    if email == 'admin@admin.com' and password == 'admin':
+        session['email'] = email
         return jsonify({'success': True})
     else:
         return jsonify({'success': False}), 401
