@@ -22,3 +22,6 @@ api_bp.add_url_rule('/users', view_func=users.getUsers, methods=['GET'])
 
 from . import users_reset
 api_bp.add_url_rule('/reset', view_func=users_reset.userDetails, methods=['POST'])
+
+from . import users_remove
+api_bp.add_url_rule('/remove', view_func=users_remove.removeUser, methods=['POST'])

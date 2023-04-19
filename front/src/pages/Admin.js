@@ -123,8 +123,31 @@ function Admin() {
       });
   };
 
-  const removeUser = (id) => {
-    console.log('Remove User', id);
+  const removeUser = (email) => {
+    console.log('Remove User', email);
+    const data = { email: email};
+    fetch('http://localhost:5000/api/remove', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Success');
+          // Refresh the data
+          fetch("http://localhost:5000/api/users")
+          .then((response) => response.json())
+          .then((users) => {
+            setUserList(users);
+          });
+        } else {
+          console.log('Error');
+        }
+      })
+      .catch(error => {console.log(error); 
+      });
   };
   
   return (
@@ -182,7 +205,7 @@ function Admin() {
                 <td>{row.email}</td>
                 <td>
                   <Button variant="info" className="ml-auto" onClick={() => resetUser(row.email)}>Reset Password</Button>
-                  <Button variant="danger" className="ml-auto" onClick={() => removeUser(row.id)}>Remove</Button>
+                  <Button variant="danger" className="ml-auto" onClick={() => removeUser(row.email)}>Remove</Button>
                 </td>
               </tr>
             ))}
