@@ -34,6 +34,29 @@ function Admin() {
 
   const handleReject = (id) => {
     console.log('Reject', id);
+    const data = { id: id};
+    fetch('http://localhost:5000/api/reject', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Success');
+          // Refresh the data
+          fetch("http://localhost:5000/api/requests")
+          .then((response) => response.json())
+          .then((data) => {
+            setData(data);
+          });
+        } else {
+          console.log('Error');
+        }
+      })
+      .catch(error => {console.log(error); 
+      });
   };
 
   
@@ -42,7 +65,7 @@ function Admin() {
     <div className="bg-dark">
       <Navbar expand="lg" variant="dark" className="navbar-main">
         <Container fluid>
-        <Navbar.Brand href="#">Guardian</Navbar.Brand>
+        <Navbar.Brand to="/">Guardian</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/admin" className="active-link">Admin</Nav.Link>

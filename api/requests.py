@@ -14,7 +14,7 @@ def getData():
 
     cursor = emailDB.cursor()
     # Check current count
-    cursor.execute("SELECT requestID, requestEMAIL, requestDATE FROM user_requests")
+    cursor.execute("SELECT requestID, requestEMAIL, requestDATE FROM user_requests WHERE requestAPPROVAL IS NULL")
 
     # Fetch all
     rows = cursor.fetchall()
