@@ -16,3 +16,9 @@ api_bp.add_url_rule('/reject', view_func=requests_rejects.rejectRequest, methods
 
 from . import requests_approve
 api_bp.add_url_rule('/approve', view_func=requests_approve.approveRequest, methods=['POST'])
+
+from . import users
+api_bp.add_url_rule('/users', view_func=users.getUsers, methods=['GET'])
+
+from . import users_reset
+api_bp.add_url_rule('/reset', view_func=users_reset.userDetails, methods=['POST'])

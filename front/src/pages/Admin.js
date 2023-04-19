@@ -19,14 +19,29 @@ import "../components/Navbar.css"
 function Admin() {
 
   const [data, setData] = useState([]);
+  const [userList, setUserList] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    fetchData();  // Requests
+    fetchUserList(); // Users
+  }, []);
+
+  const fetchData = () => {
     fetch("http://localhost:5000/api/requests")
       .then((response) => response.json())
       .then((data) => {
         setData(data);
       });
-  }, []);
+  };
+
+  const fetchUserList = () => {
+    fetch("http://localhost:5000/api/users")
+      .then((response) => response.json())
+      .then((users) => {
+        setUserList(users);
+      });
+  };
 
   const handleApprove = (id) => {
     console.log('Approve', id);
@@ -82,6 +97,35 @@ function Admin() {
       });
   };
 
+  const resetUser = (email) => {
+    console.log('Reset Password for User', email);
+    const data = { email: email};
+    fetch('http://localhost:5000/api/reset', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .then(data => {
+        console.log(data); 
+        setError('New Password for User ' + email + ': '+ data.password);
+      })
+      .catch(error => {console.log(error); 
+      });
+  };
+
+  const removeUser = (id) => {
+    console.log('Remove User', id);
+  };
   
   return (
     
@@ -99,6 +143,7 @@ function Admin() {
         </Container>
       </Navbar>
       <Container className="mt-4">
+        <h1 className="text-center">Requests</h1>
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
@@ -115,6 +160,29 @@ function Admin() {
                 <td>
                   <Button variant="success" className="ml-auto" onClick={() => handleApprove(row.id)}>Approve</Button>
                   <Button variant="danger" className="ml-auto" onClick={() => handleReject(row.id)}>Reject</Button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </Table>
+      </Container>
+      <Container className="mt-4">
+        <h1 className="text-center">Users</h1>
+        {error && <div className="alert alert-danger" role="alert">{error}</div>}
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {userList.map(row => (
+              <tr key={row.id}>
+                <td>{row.email}</td>
+                <td>
+                  <Button variant="info" className="ml-auto" onClick={() => resetUser(row.email)}>Reset Password</Button>
+                  <Button variant="danger" className="ml-auto" onClick={() => removeUser(row.id)}>Remove</Button>
                 </td>
               </tr>
             ))}
