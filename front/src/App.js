@@ -9,7 +9,7 @@ import Guardian from './pages/Guardian';
 import Detections from './pages/Detections';
 import Configure from './pages/Configure';
 import Reports from './pages/Reports';
-import Requests from './pages/Requests';
+import Admin from './pages/Admin';
 import Guide from './pages/Guide';
 import Home from './pages';
 
@@ -26,7 +26,7 @@ function App() {
         <Route path="/detections" element={<Detections />} />
         <Route path="/configure" element={<Configure />} />
         <Route path="/reports" element={<Reports />} />
-        <Route path="/requests" element={<Requests />} />
+        <Route path="/admin" element={<Admin />} />
         <Route path="/guide" element={<Guide />} />
       </Routes>
     </Router>

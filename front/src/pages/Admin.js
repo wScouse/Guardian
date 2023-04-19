@@ -15,7 +15,7 @@ import { BrowserRouter as useLocation, Link } from 'react-router-dom';
 
 import "../components/Navbar.css"
 
-function Requests() {
+function Admin() {
   
   return (
     
@@ -25,12 +25,7 @@ function Requests() {
         <Navbar.Brand href="#">Guardian</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/guardian">Home</Nav.Link>
-          <Nav.Link as={Link} to="/detections">Detections</Nav.Link>
-          <Nav.Link as={Link} to="/configure">Configure</Nav.Link>
-          <Nav.Link as={Link} to="/reports">Reports</Nav.Link>
-          <Nav.Link as={Link} to="/requests" className="active-link">Requests</Nav.Link>
-          <Nav.Link as={Link} to="/guide">Guide</Nav.Link>
+          <Nav.Link as={Link} to="/admin" className="active-link">Admin</Nav.Link>
         </Nav>
         <Button variant="danger" className="ml-auto">
           Logout
@@ -104,4 +99,4 @@ function Requests() {
   );
 }
 
-export default Requests;
+export default Admin;

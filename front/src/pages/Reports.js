@@ -29,7 +29,6 @@ function Reports() {
           <Nav.Link as={Link} to="/detections">Detections</Nav.Link>
           <Nav.Link as={Link} to="/configure">Configure</Nav.Link>
           <Nav.Link as={Link} to="/reports" className="active-link">Reports</Nav.Link>
-          <Nav.Link as={Link} to="/requests">Requests</Nav.Link>
           <Nav.Link as={Link} to="/guide">Guide</Nav.Link>
         </Nav>
         <Button variant="danger" className="ml-auto">
