@@ -7,3 +7,6 @@ api_bp.add_url_rule('/login', view_func=login.login, methods=['POST'])
 
 from . import request
 api_bp.add_url_rule('/request', view_func=request.requestAccess, methods=['POST'])
+
+from . import requests
+api_bp.add_url_rule('/requests', view_func=requests.getData, methods=['GET'])

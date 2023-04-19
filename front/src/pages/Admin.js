@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Navbar,
@@ -13,9 +13,29 @@ import {
 
 import { BrowserRouter as useLocation, Link } from 'react-router-dom';
 
+
 import "../components/Navbar.css"
 
 function Admin() {
+
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/requests")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+      });
+  }, []);
+
+  const handleApprove = (id) => {
+    console.log('Approve', id);
+  };
+
+  const handleReject = (id) => {
+    console.log('Reject', id);
+  };
+
   
   return (
     
@@ -38,60 +58,20 @@ function Admin() {
             <tr>
               <th>Email</th>
               <th>Date / Time</th>
-              <th>Approve</th>
-              <th>Reject</th>
-              <th>Contact</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>someone@somewhere.com</td>
-              <td>2022-03-01 12:34:56</td>
-              <td><Button variant="success" className="ml-auto">
-                Approve
-              </Button>
-              </td>
-              <td><Button variant="danger" className="ml-auto">
-                Reject
-              </Button>
-              </td>
-              <td><Button variant="info" className="ml-auto">
-                Contact
-              </Button>
-              </td>
-            </tr>
-            <tr>
-              <td>someone@somewhere.com</td>
-              <td>2022-02-28 23:45:01</td>
-              <td><Button variant="success" className="ml-auto">
-                Approve
-              </Button>
-              </td>
-              <td><Button variant="danger" className="ml-auto">
-                Reject
-              </Button>
-              </td>
-              <td><Button variant="info" className="ml-auto">
-                Contact
-              </Button>
-              </td>
-            </tr>
-            <tr>
-              <td>someone@somewhere.com</td>
-              <td>2022-02-27 09:12:34</td>
-              <td><Button variant="success" className="ml-auto">
-                Approve
-              </Button>
-              </td>
-              <td><Button variant="danger" className="ml-auto">
-                Reject
-              </Button>
-              </td>
-              <td><Button variant="info" className="ml-auto">
-                Contact
-              </Button>
-              </td>
-            </tr>
+            {data.map(row => (
+              <tr key={row.id}>
+                <td>{row.email}</td>
+                <td>{row.date}</td>
+                <td>
+                  <Button variant="success" className="ml-auto" onClick={() => handleApprove(row.id)}>Approve</Button>
+                  <Button variant="danger" className="ml-auto" onClick={() => handleReject(row.id)}>Reject</Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Container>

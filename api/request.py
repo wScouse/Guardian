@@ -22,7 +22,7 @@ def requestAccess():
 
 # Extract Emails
 def extractEmails(email):
-    # This function checks to see if a new entry has been added.
+    # Connect to database
     emailDB=mysql.connector.connect(
     host="localhost", user="root",
     password="", database="guardian_data")
