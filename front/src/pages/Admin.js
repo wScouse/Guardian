@@ -30,6 +30,29 @@ function Admin() {
 
   const handleApprove = (id) => {
     console.log('Approve', id);
+    const data = { id: id};
+    fetch('http://localhost:5000/api/approve', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Success');
+          // Refresh the data
+          fetch("http://localhost:5000/api/requests")
+          .then((response) => response.json())
+          .then((data) => {
+            setData(data);
+          });
+        } else {
+          console.log('Error');
+        }
+      })
+      .catch(error => {console.log(error); 
+      });
   };
 
   const handleReject = (id) => {

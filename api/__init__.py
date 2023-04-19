@@ -13,3 +13,6 @@ api_bp.add_url_rule('/requests', view_func=requests.getData, methods=['GET'])
 
 from . import requests_rejects
 api_bp.add_url_rule('/reject', view_func=requests_rejects.rejectRequest, methods=['POST'])
+
+from . import requests_approve
+api_bp.add_url_rule('/approve', view_func=requests_approve.approveRequest, methods=['POST'])
