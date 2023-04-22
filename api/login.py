@@ -3,6 +3,7 @@
 from flask import Flask, request, session, jsonify
 import hashlib
 import mysql.connector
+from flask_jwt_extended import create_access_token
 
 app = Flask(__name__)
 
@@ -28,8 +29,9 @@ def login():
             return jsonify({'success': False}), 401
         else:
             print("Valid user")
-            session['email'] = email
-            return jsonify({'success': True})
+            access_token = create_access_token(identity=email)
+            print("Access token: " + access_token)
+            return jsonify({'success': True, 'access_token': access_token})
 
     
 def validateEmail(email):
