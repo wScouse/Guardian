@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Navbar,
@@ -12,10 +12,33 @@ import {
 } from "react-bootstrap";
 
 import { BrowserRouter as useLocation, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import "../components/Navbar.css"
 
 function Reports() {
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    fetchData();  // Detections
+  }, []);
+
+  const fetchData = () => {
+    fetch("http://localhost:5000/api/reports")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+      });
+  };
+
+  const viewDetails = (id) => {
+    console.log(id);
+    const data = { id: id};
+    navigate(`/missing_report/${data.id}`)
+  };
+
   
   return (
     
@@ -41,36 +64,22 @@ function Reports() {
           <thead>
             <tr>
               <th>Threat level</th>
-              <th>Date / Time</th>
               <th>Name</th>
-              <th>Link</th>
+              <th>Date / Time</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>High</td>
-              <td>2022-03-01 12:34:56</td>
-              <td>Malware attack</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Medium</td>
-              <td>2022-02-28 23:45:01</td>
-              <td>Phishing email</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Low</td>
-              <td>2022-02-27 09:12:34</td>
-              <td>Suspicious activity</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
+            {data.map(row => (
+              <tr key={row.id}>
+                <td>{row.threat}</td>
+                <td>{row.name}</td>
+                <td>{row.date}</td>
+                <td>
+                  <Button variant="success" className="ml-auto" onClick={() => viewDetails(row.id)}>Details</Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Container>

@@ -1,8 +1,40 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Link } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 
 const Report = () => {
+  const { id } = useParams();
+  console.log(id);
+
+  useEffect(() => {
+    fetchData();  // Data for the report
+  }, []);
+
+  const fetchData = () => {
+    console.log(id);
+    const data = { id: id};
+    fetch('http://localhost:5000/api/report', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error('Network response was not ok');
+        }
+      })
+      .then(data => {
+        console.log("Success"); 
+      })
+      .catch(error => {console.log(error); 
+      });
+  };
+
+
   return (
     <div className="bg-dark vh-100">
       <div className="container my-5 text-white">

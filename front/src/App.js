@@ -12,6 +12,7 @@ import Reports from './pages/Reports';
 import Admin from './pages/Admin';
 import Guide from './pages/Guide';
 import Home from './pages';
+import Missing_Report from './pages/Missing_Report';
 
 function App() {
   console.log('App started');
@@ -21,6 +22,7 @@ function App() {
         < Route path="/" exact element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/request" element={<Request />} />
+        {/* <Route path="/report/:id" exact element={<Report />} /> */}
         <Route path="/report" element={<Report />} />
         <Route path="/guardian" element={<Guardian />} />
         <Route path="/detections" element={<Detections />} />
@@ -28,6 +30,7 @@ function App() {
         <Route path="/reports" element={<Reports />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/guide" element={<Guide />} />
+        <Route path="/missing_report/:id" element={<Missing_Report />} />
       </Routes>
     </Router>
   );

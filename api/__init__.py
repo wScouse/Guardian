@@ -25,3 +25,9 @@ api_bp.add_url_rule('/reset', view_func=users_reset.userDetails, methods=['POST'
 
 from . import users_remove
 api_bp.add_url_rule('/remove', view_func=users_remove.removeUser, methods=['POST'])
+
+from . import reports
+api_bp.add_url_rule('/reports', view_func=reports.getDetections, methods=['GET'])
+
+from . import missing_report
+api_bp.add_url_rule('/missing_report', view_func=missing_report.createReport, methods=['POST'])
