@@ -17,9 +17,16 @@ import { useNavigate } from 'react-router-dom';
 import "../components/Navbar.css"
 
 function Reports() {
+
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
+
+  // Check if user is authenticated
+  if (localStorage.getItem('authenticated') === 'false') {
+    console.log('Not authenticated');
+    navigate('/login');
+  }
 
   useEffect(() => {
     fetchData();  // Detections
@@ -39,6 +46,23 @@ function Reports() {
     navigate(`/missing_report/${data.id}`)
   };
 
+  const handleLogout = () => {
+    fetch('http://localhost:5000/api/logout', {
+      method: 'POST'})
+      .then(response => {
+        if (response.ok) {
+          console.log('Success');
+          // Refresh the data
+          localStorage.setItem('authenticated', 'false');
+          navigate('/');
+        } else {
+          console.log('Error');
+        }
+      })
+      .catch(error => {console.log(error); 
+      });
+  }
+
   
   return (
     
@@ -54,7 +78,7 @@ function Reports() {
           <Nav.Link as={Link} to="/reports" className="active-link">Reports</Nav.Link>
           <Nav.Link as={Link} to="/guide">Guide</Nav.Link>
         </Nav>
-        <Button variant="danger" className="ml-auto">
+        <Button variant="danger" className="ml-auto" onClick={handleLogout}>
           Logout
         </Button>
         </Container>

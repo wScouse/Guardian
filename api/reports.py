@@ -3,7 +3,10 @@
 from flask import Flask, request, session, jsonify
 import mysql.connector
 
+
+
 app = Flask(__name__)
+
 
 @app.route('/api/reports')
 def getDetections():

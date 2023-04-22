@@ -31,3 +31,6 @@ api_bp.add_url_rule('/reports', view_func=reports.getDetections, methods=['GET']
 
 from . import missing_report
 api_bp.add_url_rule('/missing_report', view_func=missing_report.createReport, methods=['POST'])
+
+from . import logout
+api_bp.add_url_rule('/logout', view_func=logout.logout, methods=['POST'])
