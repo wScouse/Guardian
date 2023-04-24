@@ -24,7 +24,13 @@ function Login(){
     .then(data => {console.log(data); 
       if (data.success) {
         localStorage.setItem('authenticated', 'true');
-        navigate('/guardian');
+        if (data.admin) {
+          localStorage.setItem('admin', 'true');
+          navigate('/admin');
+        } else {
+          localStorage.setItem('admin', 'false');
+          navigate('/guardian');
+        }
       } else {
         setError('Invalid email or password.');
       }

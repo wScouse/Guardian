@@ -5,10 +5,11 @@ import mysql.connector
 
 app = Flask(__name__)
 
-@app.route('/api/missing_report')
+@app.route('/api/missing_report', methods=['POST'])
 def createReport():
     id = request.json.get('id')
     print(id)
+
 
     
     detectionData = detectionDetails(id)
@@ -19,7 +20,14 @@ def createReport():
 
     missingData = missingDetails(missID)
 
-    data = detectionData + missingData
+    # data = detectionData + missingData # Potenital formatting issue
+
+    # data = {**detectionData[0], **missingData[0]}   # Doesn't work
+
+    data = list(detectionData[0].values()) + list(missingData[0].values()) # Works
+
+
+    
 
     # Return data as JSON
     print(data)
@@ -37,12 +45,19 @@ def detectionDetails(id):
     cursor.execute(sql, (id,))
 
     # Fetch all
-    rows = cursor.fetchall()
+    # rows = cursor.fetchall()
 
-    detectionData = []
-    for row in rows:
-        dict_row = {'id': row[0], 'missing_id': row[1], 'Found Date': row[2], 'Found Location': row[3], 'Found Image': row[4]}
-        detectionData.append(dict_row)
+    # Fetchone
+    row = cursor.fetchone()
+
+    print(row)
+
+    # detectionData = []
+    # for row in rows:
+    #     dict_row = {'detection_ id': row[0], 'missing_id': row[1], 'Found_Date': row[2], 'Found_Location': row[3], 'Found_Image': row[4]}
+    #     detectionData.append(dict_row)
+
+    detectionData = [{'detection_ id': row[0], 'missing_id': row[1], 'Found_Date': row[2], 'Found_Location': row[3], 'Found_Image': row[4]}]
     
     print(detectionData)
 
@@ -59,12 +74,19 @@ def missingDetails(id):
     cursor.execute(sql, (id,))
 
     # Fetch all
-    rows = cursor.fetchall()
+    # rows = cursor.fetchall()
 
-    missingData = []
-    for row in rows:
-        dict_row = {'Name': row[0], 'Missing From': row[1], 'Missing Location': row[2], 'Age': row[3], 'Gender': row[4], 'Info': row[5], 'Kin ID': row[6], ' Missing Photo ID': row[7], 'Actual Threat' : row[8], 'Estimated Threat': row[8]}
-        missingData.append(dict_row)
+    # Fetchone
+    row = cursor.fetchone()
+
+    print(row)
+
+    # missingData = []
+    # for row in rows:
+    #     dict_row = {'Name': row[0], 'Missing_From': row[1], 'Missing_Location': row[2], 'Age': row[3], 'Gender': row[4], 'Info': row[5], 'Kin_ID': row[6], ' Missing_Photo_ID': row[7], 'Actual_Threat' : row[8], 'Estimated_Threat': row[8]}
+    #     missingData.append(dict_row)
     
+    missingData = [{'Name': row[0], 'Missing_From': row[1], 'Missing_Location': row[2], 'Age': row[3], 'Gender': row[4], 'Info': row[5], 'Kin_ID': row[6], ' Missing_Photo_ID': row[7], 'Actual_Threat' : row[8], 'Estimated_Threat': row[8]}]
+
     print(missingData)
     return missingData

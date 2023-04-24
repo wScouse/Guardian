@@ -149,6 +149,24 @@ function Admin() {
       .catch(error => {console.log(error); 
       });
   };
+
+  const handleLogout = () => {
+    fetch('http://localhost:5000/api/logout', {
+      method: 'POST'})
+      .then(response => {
+        if (response.ok) {
+          console.log('Success');
+          // Refresh the data
+          localStorage.setItem('authenticated', 'false');
+          localStorage.setItem('admin', 'false');
+          navigate('/');
+        } else {
+          console.log('Error');
+        }
+      })
+      .catch(error => {console.log(error); 
+      });
+  }
   
   return (
     
@@ -160,7 +178,7 @@ function Admin() {
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/admin" className="active-link">Admin</Nav.Link>
         </Nav>
-        <Button variant="danger" className="ml-auto">
+        <Button variant="danger" className="ml-auto" onClick={handleLogout}>
           Logout
         </Button>
         </Container>

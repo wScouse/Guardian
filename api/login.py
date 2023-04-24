@@ -29,11 +29,15 @@ def login():
             return jsonify({'success': False}), 401
         else:
             print("Valid user")
+            
             # access_token = create_access_token(identity=email)
             # print("Access token: " + access_token)
             # return jsonify({'success': True, 'access_token': access_token})
             session['email'] = email
-            return jsonify({'success': True})
+            if email == "admin@admin.com":
+                return jsonify({'success': True, 'admin': True})
+            else:
+                return jsonify({'success': True, 'admin': False})
 
 
     

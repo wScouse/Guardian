@@ -54,6 +54,7 @@ function Reports() {
           console.log('Success');
           // Refresh the data
           localStorage.setItem('authenticated', 'false');
+          localStorage.setItem('admin', 'false');
           navigate('/');
         } else {
           console.log('Error');
