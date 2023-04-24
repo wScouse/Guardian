@@ -32,7 +32,7 @@ const Missing_Report = () => {
 
   const fetchData = () => {
     const data = { id: id};
-    fetch('http://localhost:5000/api/missing_report', {
+    fetch('http://localhost:5000/api/detection_report', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
