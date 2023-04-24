@@ -13,6 +13,7 @@ import Admin from './pages/Admin';
 import Guide from './pages/Guide';
 import Home from './pages';
 import Missing_Report from './pages/Missing_Report';
+import Detection_Report from './pages/Detection_Report';
 
 function App() {
   console.log('App started');
@@ -31,6 +32,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/guide" element={<Guide />} />
         <Route path="/missing_report/:id" element={<Missing_Report />} />
+        <Route path="/detection_report/:id" element={<Detection_Report />} />
       </Routes>
     </Router>
   );

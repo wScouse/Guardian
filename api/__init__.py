@@ -27,10 +27,16 @@ from . import users_remove
 api_bp.add_url_rule('/remove', view_func=users_remove.removeUser, methods=['POST'])
 
 from . import reports
-api_bp.add_url_rule('/reports', view_func=reports.getDetections, methods=['GET'])
+api_bp.add_url_rule('/reports', view_func=reports.getReports, methods=['GET'])
 
 from . import missing_report
-api_bp.add_url_rule('/missing_report', view_func=missing_report.createReport, methods=['POST'])
+api_bp.add_url_rule('/missing_report', view_func=missing_report.createMissingReport, methods=['POST'])
 
 from . import logout
 api_bp.add_url_rule('/logout', view_func=logout.logout, methods=['POST'])
+
+from . import detections
+api_bp.add_url_rule('/detections', view_func=detections.getDetections, methods=['GET'])
+
+from . import detection_report
+api_bp.add_url_rule('/detection_report', view_func=detection_report.createDetectionReport, methods=['POST'])

@@ -79,7 +79,7 @@ const Missing_Report = () => {
         <Navbar.Brand to="/">Guardian</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Nav className="mr-auto">
-          <Nav.Link as={Link} to="/reports" className="link">Back</Nav.Link>
+          <Nav.Link as={Link} to="/detections" className="link">Back</Nav.Link>
         </Nav>
         <Button variant="danger" className="ml-auto" onClick={handleLogout}>
           Logout
@@ -94,37 +94,59 @@ const Missing_Report = () => {
               {/* Missing Information Start */}
               <h1 className="mb-4">Initial Report</h1>
               <Card className="my-3">
-                <Card.Header>{data[0]}</Card.Header> {/* Missing ID */}
+                <Card.Header>{data[1]}</Card.Header> {/* Missing ID */}
                 <Card.Body>
                   <Card.Img
                     variant="top"
-                    src={`http://localhost/Guardian/GuardianDB/${data[8]}.jpg`}
+                    src={`http://localhost/Guardian/GuardianDB/${data[12]}.jpg`}
                     alt="Missing Report Image"
                   />
-                  <Card.Title>{data[1]}</Card.Title> {/* Missing Name */}
+                  <Card.Title>{data[5]}</Card.Title> {/* Missing Name */}
                   <Card.Text>
-                    <p>{data[4]}</p> {/* Missing Age */}
-                    <p>{data[5]}</p> {/* Missing Gender */}
-                    <p>{data[2]}</p> {/* Missing Since */}
-                    <p>{data[3]}</p> {/* Missing From */}
-                    <p>{data[10]}</p> {/* Estimated Threat */}
-                    <p>{data[6]}</p> {/* Extra Info */}
-                    <p>{data[7]}</p> {/* Kin ID*/}
+                    <p>{data[8]}</p> {/* Missing Age */}
+                    <p>{data[9]}</p> {/* Missing Gender */}
+                    <p>{data[6]}</p> {/* Missing Since */}
+                    <p>{data[7]}</p> {/* Missing From */}
+                    <p>{data[14]}</p> {/* Estimated Threat */}
+                    <p>{data[10]}</p> {/* Extra Info */}
+                    <p>{data[11]}</p> {/* Kin ID*/}
                   </Card.Text>
                 </Card.Body>
               </Card>
               {/* Missing Information End */}
             </div>
             <div className="col-md-6 mb-5 mb-md-0">
+              {/* Detection Data Start */}
+              <h1 className="mb-4">Detection Details</h1>
+              <Card className="my-3">
+              <Card.Header>{data[0]}</Card.Header>  {/* Detection ID */}
+                <Card.Body>
+                  <Card.Img
+                    variant="top"
+                    src={`http://localhost/Guardian/GuardianCaptures/${data[4]}.jpg`}
+                    alt="Detection Capture"
+                  />
+                  <Card.Text>
+                  <p>{data[2]}</p>  {/* Detection Date */}
+                    <p>{data[3]}</p> {/* Detection Location */}
+                    <p>{data[13]}</p> {/* Detection Threat */}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+              {/* Detection Data End */}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6 mb-5 mb-md-0">
               {/* Kin Information Start */}
               <h1 className="mb-4">Kin Contact Details</h1>
               <Card className="my-3">
-                <Card.Header>{data[7]}</Card.Header> {/* Kin ID */}
+                <Card.Header>{data[11]}</Card.Header> {/* Kin ID */}
                 <Card.Body>
-                  <Card.Title>{data[11]}</Card.Title> {/* Kin Name */}
+                  <Card.Title>{data[15]}</Card.Title> {/* Kin Name */}
                   <Card.Text>
-                    <p>{data[12]}</p> {/* Kin Mobile */}
-                    <p>{data[13]}</p> {/* Kin Email */}
+                    <p>{data[16]}</p> {/* Kin Mobile */}
+                    <p>{data[17]}</p> {/* Kin Email */}
                   </Card.Text>
                 </Card.Body>
               </Card>

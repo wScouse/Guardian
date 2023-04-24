@@ -88,18 +88,18 @@ function Reports() {
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
-              <th>Threat level</th>
               <th>Name</th>
-              <th>Date / Time</th>
+              <th>Threat (Estimate)</th>
+              <th>Found?</th>
               <th>Details</th>
             </tr>
           </thead>
           <tbody>
             {data.map(row => (
               <tr key={row.id}>
-                <td>{row.threat}</td>
                 <td>{row.name}</td>
-                <td>{row.date}</td>
+                <td>{row.threat}</td>
+                <td>{row.found}</td>
                 <td>
                   <Button variant="success" className="ml-auto" onClick={() => viewDetails(row.id)}>Details</Button>
                 </td>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Navbar,
@@ -11,12 +11,60 @@ import {
   Table,
 } from "react-bootstrap";
 
-import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter as useLocation, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import "../components/Navbar.css"
 
 
 function Detections() {
+
+  const [data, setData] = useState([]);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
+
+  // Check if user is authenticated
+  if (localStorage.getItem('authenticated') === 'false') {
+    console.log('Not authenticated');
+    navigate('/login');
+  }
+
+  useEffect(() => {
+    fetchData();  // Detections
+  }, []);
+
+  const fetchData = () => {
+    fetch("http://localhost:5000/api/detections")
+      .then((response) => response.json())
+      .then((data) => {
+        setData(data);
+      });
+  };
+
+  const viewDetails = (id) => {
+    console.log(id);
+    const data = { id: id};
+    navigate(`/detection_report/${data.id}`)
+  };
+
+  const handleLogout = () => {
+    fetch('http://localhost:5000/api/logout', {
+      method: 'POST'})
+      .then(response => {
+        if (response.ok) {
+          console.log('Success');
+          // Refresh the data
+          localStorage.setItem('authenticated', 'false');
+          localStorage.setItem('admin', 'false');
+          navigate('/');
+        } else {
+          console.log('Error');
+        }
+      })
+      .catch(error => {console.log(error); 
+      });
+  }
+
   return (
     <div className="bg-dark">
       <Navbar expand="lg" variant="dark" className="navbar-main">
@@ -30,7 +78,7 @@ function Detections() {
           <Nav.Link as={Link} to="/reports">Reports</Nav.Link>
           <Nav.Link as={Link} to="/guide">Guide</Nav.Link>
         </Nav>
-        <Button variant="danger" className="ml-auto">
+        <Button variant="danger" className="ml-auto" onClick={handleLogout}>
           Logout
         </Button>
         </Container>
@@ -53,36 +101,22 @@ function Detections() {
           <thead>
             <tr>
               <th>Threat level</th>
-              <th>Date / Time</th>
               <th>Name</th>
-              <th>Link</th>
+              <th>Date / Time</th>
+              <th>Details</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>High</td>
-              <td>2022-03-01 12:34:56</td>
-              <td>Malware attack</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Medium</td>
-              <td>2022-02-28 23:45:01</td>
-              <td>Phishing email</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Low</td>
-              <td>2022-02-27 09:12:34</td>
-              <td>Suspicious activity</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
+            {data.map(row => (
+              <tr key={row.id}>
+                <td>{row.threat}</td>
+                <td>{row.name}</td>
+                <td>{row.date}</td>
+                <td>
+                  <Button variant="success" className="ml-auto" onClick={() => viewDetails(row.id)}>Details</Button>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Container>
