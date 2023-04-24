@@ -35,7 +35,7 @@ const Missing_Report = () => {
       .then(data => {
         setData(data);
         console.log("Success"); 
-        // console.log(data);
+        console.log(data);
       })
       .catch(error => {console.log(error); 
         console.log(error);
@@ -96,6 +96,23 @@ const Missing_Report = () => {
                 </Card.Body>
               </Card>
               {/* Detection Data End */}
+            </div>
+          </div>
+          <div className="row">
+            <div className="col-md-6 mb-5 mb-md-0">
+              {/* Kin Information Start */}
+              <h1 className="mb-4">Kin Contact Details</h1>
+              <Card className="my-3">
+                <Card.Header>{data[11]}</Card.Header> {/* Kin ID */}
+                <Card.Body>
+                  <Card.Title>{data[15]}</Card.Title> {/* Kin Name */}
+                  <Card.Text>
+                    <p>{data[16]}</p> {/* Kin Mobile */}
+                    <p>{data[17]}</p> {/* Kin Email */}
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+              {/* Kin Information End */}
             </div>
           </div>
         {/* ))} */}
