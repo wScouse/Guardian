@@ -40,3 +40,6 @@ api_bp.add_url_rule('/detections', view_func=detections.getDetections, methods=[
 
 from . import detection_report
 api_bp.add_url_rule('/detection_report', view_func=detection_report.createDetectionReport, methods=['POST'])
+
+from . import search
+api_bp.add_url_rule('/search', view_func=search.search, methods=['POST'])

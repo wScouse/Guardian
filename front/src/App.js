@@ -7,7 +7,7 @@ import Request from './pages/Request';
 import Report from './pages/Report';
 import Guardian from './pages/Guardian';
 import Detections from './pages/Detections';
-import Configure from './pages/Configure';
+import Search from './pages/Search';
 import Reports from './pages/Reports';
 import Admin from './pages/Admin';
 import Guide from './pages/Guide';
@@ -27,7 +27,7 @@ function App() {
         <Route path="/report" element={<Report />} />
         <Route path="/guardian" element={<Guardian />} />
         <Route path="/detections" element={<Detections />} />
-        <Route path="/configure" element={<Configure />} />
+        <Route path="/search" element={<Search />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/guide" element={<Guide />} />
