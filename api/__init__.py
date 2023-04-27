@@ -43,3 +43,12 @@ api_bp.add_url_rule('/detection_report', view_func=detection_report.createDetect
 
 from . import search
 api_bp.add_url_rule('/search', view_func=search.search, methods=['POST'])
+
+from . import report_missing
+api_bp.add_url_rule('/report', view_func=report_missing.reportMissing, methods=['POST'])
+
+from . import test
+api_bp.add_url_rule('/test', view_func=test.Hello, methods=['POST'])
+
+from . import missing_add
+api_bp.add_url_rule('/missing_add', view_func=missing_add.new_missing, methods=['POST'])
