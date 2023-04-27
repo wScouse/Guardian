@@ -18,33 +18,40 @@ import "../components/Navbar.css"
 function Search() {
   const [results, setResults] = useState(null)
   const [error, setError] = useState(null)
+  const [data, setData] = useState([])
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('image', event.target.image.files[0]);
 
-    console.log(formData);
-
-    
+    function handleSubmit(event) {
+      event.preventDefault();
+      const form = event.target;
+      const data = new FormData();
+      data.append('image', form.image.files[0]);
+      console.log(data);
       fetch('http://localhost:5000/api/search', {
         method: 'POST',
+        body: data,
         headers: {
-          'enctype': 'multipart/form-data',
-        },
-        body: formData,
-      })
-
+          'Accept': 'application/json',
+        }
+        })
+  
       .then(response => response.json())
-      .then(data => {
-        console.log(data); 
+      .then(data => {console.log(data); 
         setResults(data);
-        setError(null);
+        setData(data);
       })
       .catch(error => {console.log(error);
         setError('An error occurred. Please try again later.');
       });
     }
+
+    const handleReject = (id) => {
+      console.log('Reject', id);
+    };
+
+    const handleApprove = (id) => {
+      console.log('Reject', id);
+    };
 
 
   return (
@@ -85,27 +92,31 @@ function Search() {
             <div className="col-md-6 mb-5 mb-md-0">
               {/* Kin Information Start */}
               <h1 className="mb-4">Kin Contact Details</h1>
+              {data.length > 0 && (
               <Table striped bordered hover variant="dark">
                 <thead>
                   <tr>
-                    <th>ID</th>
                     <th>Name</th>
-                    <th>Details</th>
+                    <th>Report Photo</th>
+                    <th>Capture</th>
+                    <th>Approve / Reject</th>
                   </tr>
                 </thead>
-                {/* <tbody>
+                <tbody>
                   {data.map(row => (
-                    <tr key={row.id}>
-                      <td>{row.name}</td>
-                      <td>{row.threat}</td>
-                      <td>{row.found}</td>
+                    <tr key={row.ID}>
+                      <td>{row.Name}</td>
+                      <td><img src={row.Photo} alt="Missing Report Image" /></td>
+                      <td><img src={row.Capture} alt="Captured Image" /></td>
                       <td>
-                        <Button variant="success" className="ml-auto" onClick={() => viewDetails(row.id)}>Details</Button>
+                        <Button variant="success" className="ml-auto" onClick={() => handleApprove(row.id)}>Approve</Button>
+                        <Button variant="danger" className="ml-auto" onClick={() => handleReject(row.id)}>Reject</Button>
                       </td>
                     </tr>
                   ))}
-                </tbody> */}
+                </tbody>
               </Table>
+              )}
             </div>
           </div>
       </div>
