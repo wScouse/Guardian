@@ -16,6 +16,7 @@ const Report = () => {
     data.append('lastname', form.lastname.value);
     data.append('age', form.age.value);
     data.append('gender', form.gender.value);
+    data.append('location', form.location.value);
     data.append('additionalInfo', form.additionalInfo.value);
     data.append('contactName', form.kname.value);
     data.append('mobileNumber', form.kmobile.value);
@@ -87,6 +88,12 @@ const Report = () => {
                   Gender
                 </label>
                 <input type="text" className="form-control" id="gender" />
+              </div>
+              <div className="mb-3">
+                <label htmlFor="location" className="form-label">
+                  Last Seen Location
+                </label>
+                <input type="text" className="form-control" id="location" />
               </div>
               <div className="mb-3">
                 <textarea className="form-control" id="additionalInfo" rows="5" placeholder="Enter additional information here..."></textarea>

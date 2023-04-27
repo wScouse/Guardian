@@ -7,6 +7,7 @@ import uuid
 import matplotlib.pyplot as plt
 from PIL import Image
 from deepface import DeepFace
+import datetime
 
 app = Flask(__name__)
 
@@ -124,7 +125,44 @@ def saveKin(data):
 
 def saveReport(photo, threat, data, kinID):
     first_name = data.get('firstname')
-    print(first_name)
+    last_name = data.get('lastname')
+    age = data.get('age')
+    gender = data.get('gender')
+    location = data.get('location')
+    additional_info = data.get('additionalInfo')
+
+    name = first_name + " " + last_name
 
     print(kinID)
+
+    dataDate = datetime.datetime.now()
+
+    # Connect to database
+    dataDB=mysql.connector.connect(
+    host="localhost", user="root",
+    password="", database="guardian_missing_people_data")
+
+    # Get a cursor object
+    cursor = dataDB.cursor()
+
+
+    try:
+        # Execute the query
+        # Add data to database.
+        sql = "INSERT INTO missing_people_data (missingNAME, missingAGE, missingGENDER, missingLOCATION, missingINFO, missingFROM, kinID, photoID, threatESTIMATE, foundSTATUS) values (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+        val = (name, age, gender, location, additional_info, dataDate, kinID, photo, threat, "False")
+        cursor.execute(sql, val)
+
+        caseID = cursor.lastrowid
+        print(caseID)
+
+        # Commit transaction
+        dataDB.commit()
+
+        cursor.close()
+        dataDB.close()
+
+
+    except Exception as e:
+        print("Error: ", e)
 
