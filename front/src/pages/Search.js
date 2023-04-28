@@ -43,8 +43,14 @@ function Search() {
   
       .then(response => response.json())
       .then(data => {console.log(data); 
-        setResults(data);
         setData(data);
+        console.log(data);
+        console.log(data.length);
+        if (data.length > 0) {
+          setResults(data);
+        } else {
+          setError('No Matches Found.');
+        }
       })
       .catch(error => {console.log(error);
         setError('An error occurred. Please try again later.');
@@ -125,9 +131,15 @@ function Search() {
               </form>
               
             </div>
+            {error && (
+              <div className="alert alert-danger" role="alert">
+                {error}
+              </div>
+            )}
+
             <div className="col-md-6 mb-5 mb-md-0">
               {/* Captured Image*/}
-              {results && (
+              {data.length > 0 && results && (
                 <div className="d-flex justify-content-centre">
                   <img src={results[0].Capture} alt="Captured Image" />
                 </div>
@@ -155,7 +167,7 @@ function Search() {
                         <td><img src={row.Photo} alt="Missing Report Image" /></td>
                         <td>
                           <Button variant="success" className="ml-auto" onClick={() => handleApprove(row.ID, row.Name, row.Capture)}>Approve</Button>
-                          <Button variant="danger" className="ml-auto" onClick={() => handleReject(row.ID)}>Reject</Button>
+                          {/* <Button variant="danger" className="ml-auto" onClick={() => handleReject(row.ID)}>Reject</Button> */}
                         </td>
                       </tr>
                     ))}

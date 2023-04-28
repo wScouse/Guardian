@@ -27,7 +27,7 @@ function Guardian() {
         <Nav className="mr-auto">
           <Nav.Link as={Link} to="/guardian" className="active-link">Home</Nav.Link>
           <Nav.Link as={Link} to="/detections">Detections</Nav.Link>
-          <Nav.Link as={Link} to="/configure">Configure</Nav.Link>
+          <Nav.Link as={Link} to="/search">Search</Nav.Link>
           <Nav.Link as={Link} to="/reports">Reports</Nav.Link>
           <Nav.Link as={Link} to="/guide">Guide</Nav.Link>
         </Nav>
