@@ -10,6 +10,7 @@ import {
   Card,
   Table,
   Modal,
+  Form,
 } from "react-bootstrap";
 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
@@ -20,6 +21,10 @@ function Search() {
   const [results, setResults] = useState(null)
   const [error, setError] = useState(null)
   const [data, setData] = useState([])
+  const [showModal, setShowModal] = useState(false);
+  const [location, setLocation] = useState("");
+  const [selectedItem, setSelectedItem] = useState(null);
+
 
 
     function handleSubmit(event) {
@@ -52,7 +57,19 @@ function Search() {
 
     const handleApprove = (id, name, capture) => {
       console.log('Approve', id);
-      const data = { id: id, name: name, capture: capture };
+      setSelectedItem({ id, name, capture})
+      setShowModal(true);
+
+      // const data = { id: id, name: name, capture: capture };
+      // console.log(data);
+      
+    };
+
+    const handleLocationSubmit = (e) => {
+      e.preventDefault();
+      console.log(location);
+      const { id, name, capture } = selectedItem;
+      const data = { id, name, capture, location };
       console.log(data);
       fetch('http://localhost:5000/api/search_add', {
       method: 'POST',
@@ -69,6 +86,7 @@ function Search() {
       })
       .catch(error => {console.log(error); 
       });
+      setShowModal(false);
     };
 
 
@@ -148,8 +166,41 @@ function Search() {
           </div>
 
       </div>
+
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Enter Location</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form onSubmit={handleLocationSubmit}>
+            <Form.Group controlId="location">
+              <Form.Label>Location</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Enter location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+            </Form.Group>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </Form>
+        </Modal.Body>
+      </Modal>
+
+
     </div>
+
+    
+
+
+  
+
+
   );
+
+
 }
 
 export default Search;
