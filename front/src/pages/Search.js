@@ -9,6 +9,7 @@ import {
   Col,
   Card,
   Table,
+  Modal,
 } from "react-bootstrap";
 
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
@@ -49,8 +50,25 @@ function Search() {
       console.log('Reject', id);
     };
 
-    const handleApprove = (id) => {
-      console.log('Reject', id);
+    const handleApprove = (id, name, capture) => {
+      console.log('Approve', id);
+      const data = { id: id, name: name, capture: capture };
+      console.log(data);
+      fetch('http://localhost:5000/api/search_add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+      .then(response => {
+        if (response.ok) {
+          console.log('Approved');
+          // window.location.reload();
+        }
+      })
+      .catch(error => {console.log(error); 
+      });
     };
 
 
@@ -90,35 +108,45 @@ function Search() {
               
             </div>
             <div className="col-md-6 mb-5 mb-md-0">
-              {/* Kin Information Start */}
-              <h1 className="mb-4">Kin Contact Details</h1>
-              {data.length > 0 && (
-              <Table striped bordered hover variant="dark">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Report Photo</th>
-                    <th>Capture</th>
-                    <th>Approve / Reject</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {data.map(row => (
-                    <tr key={row.ID}>
-                      <td>{row.Name}</td>
-                      <td><img src={row.Photo} alt="Missing Report Image" /></td>
-                      <td><img src={row.Capture} alt="Captured Image" /></td>
-                      <td>
-                        <Button variant="success" className="ml-auto" onClick={() => handleApprove(row.id)}>Approve</Button>
-                        <Button variant="danger" className="ml-auto" onClick={() => handleReject(row.id)}>Reject</Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
+              {/* Captured Image*/}
+              {results && (
+                <div className="d-flex justify-content-centre">
+                  <img src={results[0].Capture} alt="Captured Image" />
+                </div>
               )}
+              
             </div>
           </div>
+          <div className="row">
+            <div className="col-md-6 mb-5 mb-md-0">
+              {/* Kin Information Start */}
+              <h1 className="mb-4">Detections</h1>
+              {data.length > 0 && (
+                <Table striped bordered hover variant="dark" className="mx-auto">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Report Photo</th>
+                      <th>Approve / Reject</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {data.map(row => (
+                      <tr key={row.ID}>
+                        <td>{row.Name}</td>
+                        <td><img src={row.Photo} alt="Missing Report Image" /></td>
+                        <td>
+                          <Button variant="success" className="ml-auto" onClick={() => handleApprove(row.ID, row.Name, row.Capture)}>Approve</Button>
+                          <Button variant="danger" className="ml-auto" onClick={() => handleReject(row.ID)}>Reject</Button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+                )}
+            </div>
+          </div>
+
       </div>
     </div>
   );
