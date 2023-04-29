@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
+
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import {
   Navbar,
@@ -12,12 +13,31 @@ import {
 } from "react-bootstrap";
 
 import { BrowserRouter as useLocation, Link } from 'react-router-dom';
+import axios from 'axios';
 
 import "../components/Navbar.css"
 
 function Guardian() {
+  const [recentDetections, setRecentDetections] = useState([]);
+  const [detectionCount, setDetectionCount] = useState(0);
+
+
+  useEffect(() => {
+    axios.get('http://localhost:5000/api/guardian')
+      .then(response => {
+        console.log(response.data);
+        setRecentDetections(response.data.detections);
+        console.log(setRecentDetections)
+        setDetectionCount(response.data.count);
+        console.log(setDetectionCount)
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }, []);
   
   return (
+
     
     <div className="bg-dark">
       <Navbar expand="lg" variant="dark" className="navbar-main">
@@ -41,7 +61,7 @@ function Guardian() {
           <Col>
             <Card className="p-3">
               <h4>Number of Detections</h4>
-              <p>25</p>
+              <p>{detectionCount}</p>
             </Card>
           </Col>
           <Col>
@@ -56,37 +76,17 @@ function Guardian() {
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
-              <th>Threat level</th>
-              <th>Date / Time</th>
-              <th>Name</th>
-              <th>Link</th>
+              <th>Missing ID</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>High</td>
-              <td>2022-03-01 12:34:56</td>
-              <td>Malware attack</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Medium</td>
-              <td>2022-02-28 23:45:01</td>
-              <td>Phishing email</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
-            <tr>
-              <td>Low</td>
-              <td>2022-02-27 09:12:34</td>
-              <td>Suspicious activity</td>
-              <td>
-                <a href="#">View</a>
-              </td>
-            </tr>
+          {recentDetections && recentDetections.map((detection) => (
+              <tr key={detection.id}>
+                <td>{detection.missingID}</td>
+                <td>{detection.detectionDATE}</td>
+              </tr>
+            ))}
           </tbody>
         </Table>
       </Container>

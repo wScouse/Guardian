@@ -55,3 +55,6 @@ api_bp.add_url_rule('/missing_add', view_func=missing_add.new_missing, methods=[
 
 from . import search_add
 api_bp.add_url_rule('/search_add', view_func=search_add.logDetection, methods=['POST'])
+
+from . import guardian
+api_bp.add_url_rule('/guardian', view_func=guardian.get_detections, methods=['GET'])
