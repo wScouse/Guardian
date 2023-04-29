@@ -38,7 +38,8 @@ def get_detections():
             'missingID': detection[1],
             'detectionDATE': detection[2],
             'detectionLOCATION': detection[3],
-            'detectionCAPTURE': detection[4]
+            'detectionCAPTURE': detection[4],
+            'detectionTHREAT': detection[5]
         }
         print(detection_dict)
         response['detections'].append(detection_dict)

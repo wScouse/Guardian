@@ -12,6 +12,8 @@ import {
 } from "react-bootstrap";
 
 import { BrowserRouter as useLocation, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 
 
 import "../components/Navbar.css"
@@ -21,11 +23,18 @@ function Admin() {
   const [data, setData] = useState([]);
   const [userList, setUserList] = useState([]);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData();  // Requests
     fetchUserList(); // Users
   }, []);
+
+  // Check if user is authenticated
+  if (localStorage.getItem('admin') === 'false') {
+    console.log('Not authenticated');
+    navigate('/login');
+  }
 
   const fetchData = () => {
     fetch("http://localhost:5000/api/requests")

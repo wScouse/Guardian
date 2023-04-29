@@ -12,10 +12,39 @@ import {
 } from "react-bootstrap";
 
 import { BrowserRouter as useLocation, Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
 import "../components/Navbar.css";
 
 function Guide() {
+
+  const navigate = useNavigate();
+
+  // Check if user is authenticated
+  if (localStorage.getItem('authenticated') === 'false') {
+    console.log('Not authenticated');
+    navigate('/login');
+  }
+
+  const handleLogout = () => {
+    fetch('http://localhost:5000/api/logout', {
+      method: 'POST'})
+      .then(response => {
+        if (response.ok) {
+          console.log('Success');
+          // Refresh the data
+          localStorage.setItem('authenticated', 'false');
+          localStorage.setItem('admin', 'false');
+          navigate('/');
+        } else {
+          console.log('Error');
+        }
+      })
+      .catch(error => {console.log(error); 
+      });
+  }
+
+
   return (
     <div className="bg-dark">
       <Navbar expand="lg" variant="dark" className="navbar-main">
@@ -39,7 +68,7 @@ function Guide() {
               Guide
             </Nav.Link>
           </Nav>
-          <Button variant="danger" className="ml-auto">
+          <Button variant="danger" className="ml-auto" onClick={handleLogout}>
             Logout
           </Button>
         </Container>

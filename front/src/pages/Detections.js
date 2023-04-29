@@ -83,19 +83,7 @@ function Detections() {
         </Button>
         </Container>
       </Navbar>
-      <Container className="mt-4">
-        <Row>
-          <Col>
-           
-          </Col>
-          <Col>
-            <Card className="p-3">
-              <h4>Video Feed</h4>
-              <p>Online</p>
-            </Card>
-          </Col>
-        </Row>
-      </Container>
+      
       <Container className="mt-4">
         <Table striped bordered hover variant="dark">
           <thead>
