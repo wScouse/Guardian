@@ -21,7 +21,7 @@ def createDetectionReport():
     missingData = missingDetails(missID)
 
     kinID = missingData[0]['Kin_ID'] # Get the kin ID from the missing data
-    print(kinID)
+    # print(kinID)
 
     kindata = kinDetails(kinID)
 
@@ -35,7 +35,7 @@ def createDetectionReport():
     
 
     # Return data as JSON
-    print(data)
+    # print(data)
 
     return jsonify(data)
 
@@ -110,9 +110,9 @@ def kinDetails(id):
     # Fetchone
     row = cursor.fetchone()
 
-    print(row)
+    # print(row)
 
     kindata = [{'Kin_Name': row[0], 'Kin_Mobile': row[1], 'Kin_Email': row[2]}]
 
-    print(kindata)
+    # print(kindata)
     return kindata

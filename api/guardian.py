@@ -24,7 +24,7 @@ def get_detections():
     cursor.execute("SELECT * FROM detection_data ORDER BY detectionDATE DESC LIMIT 5")
     detections = cursor.fetchall()
 
-    print(detections)
+    # print(detections)
 
     # build response object
     response = {
@@ -41,9 +41,9 @@ def get_detections():
             'detectionCAPTURE': detection[4],
             'detectionTHREAT': detection[5]
         }
-        print(detection_dict)
+        # print(detection_dict)
         response['detections'].append(detection_dict)
-        print(response)
+        # print(response)
 
     cursor.close()
     dataDB.close()

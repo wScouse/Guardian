@@ -8,7 +8,7 @@ app = Flask(__name__)
 @app.route('/api/reject')
 def rejectRequest():
     id = request.json.get('id')
-    print(id)
+    # print(id)
 
     selection = 'Rejected'
 

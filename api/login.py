@@ -10,9 +10,9 @@ app = Flask(__name__)
 @app.route('/api/login', methods=['POST'])
 def login():
     email = request.json.get('email')
-    print(email)
+    # print(email)
     password = request.json.get('password')
-    print(password)
+    # print(password)
 
     # Check if valid email
     if validateEmail(email) == False:
