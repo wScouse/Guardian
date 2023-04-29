@@ -8,6 +8,6 @@ app = Flask(__name__)
 @app.route('/api/report_missing', methods=['POST'])
 def reportMissing():
     data = request.get_json()
-    print(data)
+    # print(data)
 
     return jsonify({'success': True})

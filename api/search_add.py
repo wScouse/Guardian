@@ -13,25 +13,25 @@ app = Flask(__name__)
 @app.route('/api/search_add', methods=['POST'])
 def logDetection():
     id = request.json.get('id')
-    print(id)
+    # print(id)
     name = request.json.get('name')
-    print(name)
+    # print(name)
     location = request.json.get('location')
-    print(location)
+    # print(location)
     capture_img = request.json.get('capture')
-    print(capture_img)
+    # print(capture_img)
 
     threat = analyse_image(capture_img)
-    print(threat)
+    # print(threat)
 
     dataDate = datetime.datetime.now()
-    print(dataDate)
+    # print(dataDate)
 
     filename = os.path.basename(capture_img)
     # print(filename)
 
     img_file = filename.split('.')[0]
-    print(img_file)
+    # print(img_file)
 
     setFound(id)
 
@@ -42,11 +42,11 @@ def logDetection():
 # Analyse emotion of person in image to assign threat level.
 def analyse_image(new_filename):
     results = DeepFace.analyze(img_path = new_filename, actions = ['emotion'])
-    print(results)
+    # print(results)
 
     # Get dominant emotion
     emotion = results[0]['dominant_emotion']
-    print(emotion)
+    # print(emotion)
 
     # Assign threat level based on emotion
     highThreat = ["angry", "fear", "sad", "disgust"]

@@ -11,7 +11,7 @@ app = Flask(__name__)
 @app.route('/api/approve')
 def approveRequest():
     id = request.json.get('id')
-    print(id)
+    # print(id)
 
     updateRequests(id)
 

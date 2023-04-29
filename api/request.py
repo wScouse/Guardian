@@ -9,7 +9,7 @@ app = Flask(__name__)
 @app.route('/api/request', methods=['POST'])
 def requestAccess():
     email = request.json.get('email')
-    print(email)
+    # print(email)
 
      # Check if email has been used already
     validEmail = extractEmails(email)
@@ -58,7 +58,7 @@ def saveData(email):
         # Commit transaction
         dataDB.commit()
 
-        print("Data inserted!")
+        # print("Data inserted!")
 
     except Exception as e:
         # Rollback the transaction if an error occurred.

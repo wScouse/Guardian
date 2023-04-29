@@ -51,11 +51,11 @@ def getDetails(dataID):
 
     # Fetch all
     rows = cursor.fetchall()
-    print(rows)
+    # print(rows)
 
     name = rows[0][0]
 
 
-    print(name)
+    # print(name)
 
     return name

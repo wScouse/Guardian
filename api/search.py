@@ -15,11 +15,11 @@ app = Flask(__name__)
 @app.route('/api/search')
 def search():
     data = request.form.to_dict()
-    print(data)
+    # print(data)
 
     img = request.files.get('image')
 
-    print(img)
+    # print(img)
 
     tempID, img_type, detections =  process_image(img)
 
@@ -53,24 +53,24 @@ def search():
 
 def process_image(img):
     # Process and Save Image
-    print(img)
-    print(type(img))
+    # print(img)
+    # print(type(img))
 
     filename = img.filename
-    print(filename)
+    # print(filename)
 
     img_file = filename.split('.')[0]
-    print(img_file)
+    # print(img_file)
 
     img_type = filename.split('.')[-1]
-    print(img_type)
+    # print(img_type)
 
     # Generate random ID using UUID
     uniqueID = str(uuid.uuid4())
-    print("Unique ID: ", uniqueID)
+    # print("Unique ID: ", uniqueID)
 
     new_filename = os.path.join('C:/xampp/htdocs/Guardian/temp/', uniqueID + '.' + img_type)
-    print(new_filename)
+    # print(new_filename)
 
     img.save(new_filename)
 
@@ -84,7 +84,7 @@ def analyse_image(new_filename):
 
     results = DeepFace.find(img_path = new_filename, db_path = db_path, enforce_detection = False)
 
-    print(results)
+    # print(results)
 
     detectionIDs = []
 
@@ -111,7 +111,7 @@ def analyse_image(new_filename):
         except IndexError:
             break
 
-    print(detectionIDs)
+    # print(detectionIDs)
 
     return detectionIDs
 
@@ -148,5 +148,5 @@ def extractData(detections, capture):
     cursor.close()
     dataDB.close()
 
-    print(data)
+    # print(data)
     return data

@@ -14,7 +14,7 @@ app = Flask(__name__)
 @app.route('/api/missing_add', methods=['POST'])
 def new_missing():
     data = request.form.to_dict()
-    print(data)
+    # print(data)
 
     img = request.files.get('image')
 
@@ -29,24 +29,24 @@ def new_missing():
 
 def process_image(img):
     # Process and Save Image
-    print(img)
-    print(type(img))
+    # print(img)
+    # print(type(img))
 
     filename = img.filename
-    print(filename)
+    # print(filename)
 
     img_file = filename.split('.')[0]
-    print(img_file)
+    # print(img_file)
 
     img_type = filename.split('.')[-1]
-    print(img_type)
+    # print(img_type)
 
     # Generate random ID using UUID
     uniqueID = str(uuid.uuid4())
-    print("Unique ID: ", uniqueID)
+    # print("Unique ID: ", uniqueID)
 
     new_filename = os.path.join('C:/xampp/htdocs/Guardian/GuardianDB/', uniqueID + '.' + img_type)
-    print(new_filename)
+    # print(new_filename)
 
     img.save(new_filename)
 
@@ -57,11 +57,11 @@ def process_image(img):
 
 def analyse_image(new_filename):
     results = DeepFace.analyze(img_path = new_filename, actions = ['emotion'])
-    print(results)
+    # print(results)
 
     # Get dominant emotion
     emotion = results[0]['dominant_emotion']
-    print(emotion)
+    # print(emotion)
 
     # Assign threat level based on emotion
     highThreat = ["angry", "fear", "sad", "disgust"]
