@@ -33,7 +33,9 @@ def logDetection():
     img_file = filename.split('.')[0]
     print(img_file)
 
-    saveDetection(id, name, location, dataDate, img_file)
+    setFound(id)
+
+    saveDetection(id, name, location, dataDate, img_file, threat)
 
     return jsonify({'status': 'success'})
 
@@ -66,24 +68,27 @@ def analyse_image(new_filename):
 
     return threat
 
-
-# Update threatActual in database for missing ID.
-def updateThreat(id, threat):
-    threatDB=mysql.connector.connect(
-    host="localhost", user="Guardian",
+# Update found status
+def setFound(id):
+    dataDB=mysql.connector.connect(
+    host="localhost", user="root",
     password="", database="guardian_missing_people_data")
-    cursor = threatDB.cursor()  
 
-    sql = "UPDATE missing_people_data SET threatACTUAL = %s WHERE missingID = %s"
-    cursor.execute(sql, (threat, id,))
+
+    # Get a cursor object
+    cursor = dataDB.cursor()
+
+
+    sql = "UPDATE missing_people_data SET foundSTATUS = %s WHERE missingID = %s"
+    cursor.execute(sql, ("True", id,))
     
-    threatDB.commit()
+    dataDB.commit()
 
-    threatDB.close()
+    dataDB.close()
     cursor.close()
 
 # Save data to detections table.
-def saveDetection(id, name, location, dataDate, capture_img):
+def saveDetection(id, name, location, dataDate, capture_img, threat):
     dataDB=mysql.connector.connect(
     host="localhost", user="root",
     password="", database="guardian_missing_people_data")
@@ -94,8 +99,8 @@ def saveDetection(id, name, location, dataDate, capture_img):
     try:
         # Execute the query
         cursor.execute(
-            "INSERT INTO detection_data (missingID, detectionDATE, detectionLOCATION, detectionCAPTURE) VALUES (%s, %s, %s, %s)",
-            (id, dataDate, location,  capture_img),
+            "INSERT INTO detection_data (missingID, detectionDATE, detectionLOCATION, detectionCAPTURE, detectionTHREAT) VALUES (%s, %s, %s, %s, %s)",
+            (id, dataDate, location,  capture_img, threat),
         )
 
         # Get the KinID of the inserted row

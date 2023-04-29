@@ -17,7 +17,7 @@ def getDetections():
 
     cursor = dataDB.cursor()
     # Check current count
-    cursor.execute("SELECT detectionID, missingID, detectionDATE FROM detection_data")
+    cursor.execute("SELECT detectionID, missingID, detectionDATE, detectionTHREAT FROM detection_data")
 
     # Fetch all
     rows = cursor.fetchall()
@@ -26,8 +26,8 @@ def getDetections():
     data = []
     for row in rows:
         dataID = row[1] # ID of Missing Person
-        name, threat = getDetails(dataID)
-        dict_row = {'id': row[0], 'missing': row[1], 'date': row[2], 'name': name, 'threat': threat}
+        name = getDetails(dataID)
+        dict_row = {'id': row[0], 'missing': row[1], 'date': row[2], 'name': name, 'threat': row[3]}
         data.append(dict_row)
 
 
@@ -46,7 +46,7 @@ def getDetails(dataID):
 
     cursor = dataDB.cursor()
     # Check current count
-    sql = "SELECT missingNAME, threatACTUAL FROM missing_people_data WHERE missingID = %s"
+    sql = "SELECT missingNAME FROM missing_people_data WHERE missingID = %s"
     cursor.execute(sql, (dataID,))
 
     # Fetch all
@@ -54,8 +54,8 @@ def getDetails(dataID):
     print(rows)
 
     name = rows[0][0]
-    threat = rows[0][1]
 
-    print(name, threat)
 
-    return name, threat
+    print(name)
+
+    return name

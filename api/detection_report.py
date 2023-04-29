@@ -46,7 +46,7 @@ def detectionDetails(id):
 
     cursor = dataDB.cursor()
     # Check current count
-    sql = "SELECT detectionID, missingID, detectionDATE, detectionLOCATION, detectionCAPTURE FROM detection_data WHERE detectionID = %s"
+    sql = "SELECT detectionID, missingID, detectionDATE, detectionLOCATION, detectionCAPTURE, detectionTHREAT FROM detection_data WHERE detectionID = %s"
     cursor.execute(sql, (id,))
 
     # Fetch all
@@ -62,7 +62,7 @@ def detectionDetails(id):
     #     dict_row = {'detection_ id': row[0], 'missing_id': row[1], 'Found_Date': row[2], 'Found_Location': row[3], 'Found_Image': row[4]}
     #     detectionData.append(dict_row)
 
-    detectionData = [{'detection_ id': row[0], 'missing_id': row[1], 'Found_Date': row[2], 'Found_Location': row[3], 'Found_Image': row[4]}]
+    detectionData = [{'detection_ id': row[0], 'missing_id': row[1], 'Found_Date': row[2], 'Found_Location': row[3], 'Found_Image': row[4], 'Threat': row[5]}]
     
     # print(detectionData)
 
@@ -75,7 +75,7 @@ def missingDetails(id):
 
     cursor = dataDB.cursor()
     # Check current count
-    sql = "SELECT missingNAME, missingFROM, missingLOCATION, missingAGE, missingGENDER, missingINFO, kinID, photoID, threatACTUAL, threatESTIMATE  FROM missing_people_data WHERE missingID = %s"
+    sql = "SELECT missingNAME, missingFROM, missingLOCATION, missingAGE, missingGENDER, missingINFO, kinID, photoID, threatESTIMATE  FROM missing_people_data WHERE missingID = %s"
     cursor.execute(sql, (id,))
 
     # Fetch all
@@ -91,7 +91,7 @@ def missingDetails(id):
     #     dict_row = {'Name': row[0], 'Missing_From': row[1], 'Missing_Location': row[2], 'Age': row[3], 'Gender': row[4], 'Info': row[5], 'Kin_ID': row[6], ' Missing_Photo_ID': row[7], 'Actual_Threat' : row[8], 'Estimated_Threat': row[8]}
     #     missingData.append(dict_row)
     
-    missingData = [{'Name': row[0], 'Missing_From': row[1], 'Missing_Location': row[2], 'Age': row[3], 'Gender': row[4], 'Info': row[5], 'Kin_ID': row[6], ' Missing_Photo_ID': row[7], 'Actual_Threat' : row[8], 'Estimated_Threat': row[8]}]
+    missingData = [{'Name': row[0], 'Missing_From': row[1], 'Missing_Location': row[2], 'Age': row[3], 'Gender': row[4], 'Info': row[5], 'Kin_ID': row[6], ' Missing_Photo_ID': row[7], 'Estimated_Threat': row[8]}]
 
     # print(missingData)
     return missingData

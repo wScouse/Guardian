@@ -69,7 +69,7 @@ const Missing_Report = () => {
   }
 
   // console.log("Test")
-  // console.log(data)
+  console.log(data)
   // console.log(data.length)
 
   return (
@@ -98,18 +98,18 @@ const Missing_Report = () => {
                 <Card.Body>
                   <Card.Img
                     variant="top"
-                    src={`http://localhost/Guardian/GuardianDB/${data[12]}.jpg`}
+                    src={`http://localhost/Guardian/GuardianDB/${data[13]}.jpg`}
                     alt="Missing Report Image"
                   />
-                  <Card.Title>{data[5]}</Card.Title> {/* Missing Name */}
+                  <Card.Title>{data[6]}</Card.Title> {/* Missing Name */}
                   <Card.Text>
-                    <p>{data[8]}</p> {/* Missing Age */}
-                    <p>{data[9]}</p> {/* Missing Gender */}
-                    <p>{data[6]}</p> {/* Missing Since */}
-                    <p>{data[7]}</p> {/* Missing From */}
+                    <p>{data[9]}</p> {/* Missing Age */}
+                    <p>{data[10]}</p> {/* Missing Gender */}
+                    <p>{data[7]}</p> {/* Missing Since */}
+                    <p>{data[8]}</p> {/* Missing From */}
                     <p>{data[14]}</p> {/* Estimated Threat */}
-                    <p>{data[10]}</p> {/* Extra Info */}
-                    <p>{data[11]}</p> {/* Kin ID*/}
+                    <p>{data[11]}</p> {/* Extra Info */}
+                    <p>{data[12]}</p> {/* Kin ID*/}
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -129,7 +129,7 @@ const Missing_Report = () => {
                   <Card.Text>
                   <p>{data[2]}</p>  {/* Detection Date */}
                     <p>{data[3]}</p> {/* Detection Location */}
-                    <p>{data[13]}</p> {/* Detection Threat */}
+                    <p>{data[5]}</p> {/* Detection Threat */}
                   </Card.Text>
                 </Card.Body>
               </Card>
@@ -141,7 +141,7 @@ const Missing_Report = () => {
               {/* Kin Information Start */}
               <h1 className="mb-4">Kin Contact Details</h1>
               <Card className="my-3">
-                <Card.Header>{data[11]}</Card.Header> {/* Kin ID */}
+                <Card.Header>{data[12]}</Card.Header> {/* Kin ID */}
                 <Card.Body>
                   <Card.Title>{data[15]}</Card.Title> {/* Kin Name */}
                   <Card.Text>
