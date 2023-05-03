@@ -50,6 +50,9 @@ def process_image(img):
 
     img.save(new_filename)
 
+    # Delete detections file upon saving new image.
+    os.remove('C:/xampp/htdocs/Guardian/GuardianDB/representations_vgg_face.pkl')
+
     # Run emotion recognition on image
     threat = analyse_image(new_filename)
 
