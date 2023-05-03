@@ -41,32 +41,38 @@ def logDetection():
 
 # Analyse emotion of person in image to assign threat level.
 def analyse_image(new_filename):
-    results = DeepFace.analyze(img_path = new_filename, actions = ['emotion'])
-    # print(results)
+    try: 
+        results = DeepFace.analyze(img_path = new_filename, actions = ['emotion'])
+        # print(results)
 
-    # Get dominant emotion
-    emotion = results[0]['dominant_emotion']
-    # print(emotion)
+        # Get dominant emotion
+        emotion = results[0]['dominant_emotion']
+        # print(emotion)
 
-    # Assign threat level based on emotion
-    highThreat = ["angry", "fear", "sad", "disgust"]
-    mediumThreat = ["surprise"]
-    lowThreat = ["happy", "neutral"]
+        # Assign threat level based on emotion
+        highThreat = ["angry", "fear", "sad", "disgust"]
+        mediumThreat = ["surprise"]
+        lowThreat = ["happy", "neutral"]
 
-    # Assign threat level
-    if emotion in highThreat:
-        print("High Threat Level!")
-        threat = "high"
-    elif emotion in mediumThreat:
-        print("Medium Threat Level!")
-        threat = "medium"
-    elif emotion in lowThreat:
-        print("Low Threat Level!")
-        threat = "low"
-    else:
-        print("Error")
+        # Assign threat level
+        if emotion in highThreat:
+            print("High Threat Level!")
+            threat = "high"
+        elif emotion in mediumThreat:
+            print("Medium Threat Level!")
+            threat = "medium"
+        elif emotion in lowThreat:
+            print("Low Threat Level!")
+            threat = "low"
+        else:
+            print("Error")
 
-    return threat
+        return threat
+    
+    except Exception as e:
+        print("Error: ", e)
+        threat = "none"  # Return none if error occurs.
+        return threat
 
 # Update found status
 def setFound(id):
